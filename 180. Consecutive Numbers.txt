@@ -1,0 +1,12 @@
+WITH nums(num,prev_num,nxt_num)
+AS
+(
+    SELECT num,
+    LAG(num) OVER( ORDER BY id ) AS prev_num,
+    LEAD(num) OVER( ORDER BY id ) AS nxt_num
+    FROM Logs
+)
+SELECT
+DISTINCT num AS ConsecutiveNums
+FROM nums
+WHERE num = prev_num AND num = nxt_num
